@@ -11,7 +11,6 @@ class CDlgImage : public CDialogEx
 private:
 	static CPoint prePoint;
 	CPoint nextPoint;
-	bool m_rectInit = false;
 	int dragIndex = -1;
 	BOOL validImgPos(int x, int y);
 

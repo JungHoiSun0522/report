@@ -33,7 +33,6 @@ CDlgImage::~CDlgImage()
 void CDlgImage::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	//  DDX_Text(pDX, IDC_EDIT_CIRCLE_X1, m_viewCircle_x1);
 	DDX_Text(pDX, IDC_EDIT_CIRCLE_X1, m_viewCircleX1);
 	DDX_Text(pDX, IDC_EDIT_CIRCLE_X2, m_viewCircleX2);
 	DDX_Text(pDX, IDC_EDIT_CIRCLE_X3, m_viewCircleX3);
@@ -60,27 +59,26 @@ BOOL CDlgImage::OnInitDialog()
 
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 	MoveWindow(0, 0, 640, 510);
-	if (!m_rectInit) {
-		int nWidth = 640;
-		int nHeight = 480;
-		int nBpp = 8;
 
-		m_image.Create(nWidth, -nHeight, nBpp);
-		if (nBpp == 8) {
-			static RGBQUAD rgb[256];
-			for (int i = 0; i < 256; i++)
-				rgb[i].rgbRed = rgb[i].rgbGreen = rgb[i].rgbBlue = i;
-			m_image.SetColorTable(0, 256, rgb);
-		}
+	int nWidth = 640;
+	int nHeight = 480;
+	int nBpp = 8;
 
-		int nPitch = m_image.GetPitch();
-		unsigned char* fm = (unsigned char*)m_image.GetBits();
-
-		memset(fm, WHITE_COLOR, nWidth * nHeight);
-
-		updateDisplay();
-		m_rectInit = true;
+	m_image.Create(nWidth, -nHeight, nBpp);
+	if (nBpp == 8) {
+		static RGBQUAD rgb[256];
+		for (int i = 0; i < 256; i++)
+			rgb[i].rgbRed = rgb[i].rgbGreen = rgb[i].rgbBlue = i;
+		m_image.SetColorTable(0, 256, rgb);
 	}
+
+	int nPitch = m_image.GetPitch();
+	unsigned char* fm = (unsigned char*)m_image.GetBits();
+
+	memset(fm, WHITE_COLOR, nWidth * nHeight);
+
+	updateDisplay();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
@@ -170,7 +168,7 @@ void CDlgImage::drawClickToCircle(unsigned char* fm, int nCesnterX, int nCesnter
 	for (int j = nCesnterY - m_nRadius; j < nCesnterY + m_nRadius * 2; j++) {
 		for (int i = nCesnterX - m_nRadius; i < nCesnterX + m_nRadius * 2; i++) {
 			if (isInCircle(i, j, nCesnterX, nCesnterY, m_nRadius))
-				if(validImgPos(i, j))
+				if (validImgPos(i, j))
 					fm[j * nPitch + i] = colorRef;
 		}
 	}
@@ -184,7 +182,7 @@ BOOL CDlgImage::isInCircle(int i, int j, int nCesnterX, int nCesnterY, int m_Rad
 	double dY = (double)j - nCesnterY;
 	double dDist = dX * dX + dY * dY;
 
-	if (dDist < (int)m_Radius * m_Radius)
+	if (dDist < (int)m_Radius* m_Radius)
 		bRet = true;
 
 	return bRet;
@@ -247,7 +245,6 @@ void CDlgImage::drawCircle(vector<CPoint> m_clkPoint)
 CPoint CDlgImage::CenterPoint(CPoint A, CPoint B, CPoint C)
 {
 	double D = 2.0 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y));
-	//if (D == 0) return; // 세 점이 일직선일 경우 예외 처리
 
 	double x = ((A.x * A.x + A.y * A.y) * (B.y - C.y) +
 		(B.x * B.x + B.y * B.y) * (C.y - A.y) +
