@@ -1,0 +1,27 @@
+#include <string>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+int solution(vector<vector<int>> dots) {
+    int answer = 0;
+    
+    float y1 = abs(dots[0][0] - dots[1][0]) / 
+        sqrt(pow(abs(dots[0][0] - dots[1][0]), 2) + pow(abs(dots[0][1] - dots[1][1]), 2));
+    
+    float y2 = abs(dots[2][0] - dots[3][0]) / 
+        sqrt(pow(abs(dots[2][0] - dots[3][0]), 2) + pow(abs(dots[2][1] - dots[3][1]), 2));
+    
+    float y3 = abs(dots[0][0] - dots[2][0]) / 
+        sqrt(pow(abs(dots[0][0] - dots[2][0]), 2) + pow(abs(dots[0][1] - dots[2][1]), 2));
+    
+    float y4 = abs(dots[1][0] - dots[3][0]) / 
+        sqrt(pow(abs(dots[1][0] - dots[3][0]), 2) + pow(abs(dots[1][1] - dots[3][1]), 2));
+    
+    if(y1 == y2 || y3 == y4)
+        answer = 1;
+    else
+        answer = 0;
+    return answer;
+}

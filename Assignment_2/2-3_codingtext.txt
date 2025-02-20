@@ -1,0 +1,35 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+int solution(int a, int b, int c, int d) {
+    int answer = 0;
+    vector<int> vect;
+    vect.push_back(a), vect.push_back(b), vect.push_back(c), vect.push_back(d);
+    sort(vect.begin(), vect.end());
+    vector<int> diff;
+    
+    if(vect[0] == vect[3]){
+        answer = a * 1000 + a * 100 + a * 10 + a;
+    }
+    else if(vect[0] == vect[2])
+        answer = pow((10 * vect[0]) + vect[3], 2);
+    else if(vect[0] == vect[1]){
+        if(vect[2] == vect[3])
+            answer = (vect[0] + vect[2]) * abs(vect[0] - vect[2]);
+        else
+            answer = vect[2] * vect[3];
+    }
+    else if (vect[1] == vect[3])
+        answer = pow((10 * vect[1]) + vect[0], 2);
+    else if(vect[1] == vect[2])
+        answer = vect[0] * vect[3];
+    else if(vect[2] == vect[3])
+        answer = vect[0] * vect[1];
+    else
+        answer = vect[0];
+    return answer;
+}
